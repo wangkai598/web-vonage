@@ -15,21 +15,36 @@ function handleError(error) {
   
   function initializeSession() {
     var session = OT.initSession(apiKey, sessionId);
+
+    let audioInputDevices;
+    OT.getDevices(function(error, devices) {
+        audioInputDevices=devices.filter(function(element) {
+            console.log(element);
+            return element.kind == "audioInput";
+        });
+    });
   
     // Subscribe to a newly created stream
     session.on('streamCreated', function(event) {
         session.subscribe(event.stream, 'subscriber', {
           insertMode: 'append',
           width: '100%',
-          height: '100%'
+          height: '100%',
+          audioVolume:100
         }, handleError);
       });
+
     // Create a publisher
-    var publisher = OT.initPublisher('publisher', {
-      insertMode: 'append',
-      width: '100%',
-      height: '100%'
-    }, handleError);
+    let publisherOptions = {
+        insertMode: 'append',
+        width: '100%',
+        height: '100%',
+        audioBitrate: 64000,
+      //   videoSource: videoInputDevices[0].deviceId
+      };
+      if(audioInputDevices)
+          publisherOptions.audioSource = audioInputDevices.deviceId;
+    var publisher = OT.initPublisher('publisher', publisherOptions, handleError);
   
     // Connect to the session
     session.connect(token, function(error) {
