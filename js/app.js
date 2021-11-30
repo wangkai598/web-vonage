@@ -37,8 +37,7 @@ function handleError(error) {
         insertMode: 'append',
         width: '100%',
         height: '100%',
-        audioBitrate: 64000,
-        videoSource: videoInputDevices[0].deviceId
+        audioBitrate: 64000
       };
       if(audioInputDevices)
           publisherOptions.audioSource = audioInputDevices.deviceId;
