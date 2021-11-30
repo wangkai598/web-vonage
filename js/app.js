@@ -24,12 +24,14 @@ function handleError(error) {
     });
     // Subscribe to a newly created stream
     session.on('streamCreated', function(event) {
-        session.subscribe(event.stream, 'subscriber', {
+
+        var a = session.subscribe(event.stream, 'subscriber', {
           insertMode: 'append',
           width: '100%',
           height: '100%',
           audioVolume:100
         }, handleError);
+        a.subscriber.subscribeToAudio(true);
       });
 
     // Create a publisher
