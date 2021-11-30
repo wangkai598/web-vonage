@@ -29,8 +29,8 @@ function handleError(error) {
         session.subscribe(event.stream, 'subscriber', {
           insertMode: 'append',
           width: '100%',
-          height: '100%',
-          audioVolume:100
+          height: '100%'
+        //   audioVolume:100
         }, handleError);
       });
 
@@ -38,12 +38,12 @@ function handleError(error) {
     let publisherOptions = {
         insertMode: 'append',
         width: '100%',
-        height: '100%',
-        audioBitrate: 64000,
+        height: '100%'
+        // audioBitrate: 64000,
       //   videoSource: videoInputDevices[0].deviceId
       };
-      if(audioInputDevices)
-          publisherOptions.audioSource = audioInputDevices.deviceId;
+    //   if(audioInputDevices)
+    //       publisherOptions.audioSource = audioInputDevices.deviceId;
     var publisher = OT.initPublisher('publisher', publisherOptions, handleError);
   
     // Connect to the session
