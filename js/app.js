@@ -15,14 +15,6 @@ function handleError(error) {
   
   function initializeSession() {
     var session = OT.initSession(apiKey, sessionId);
-
-    let audioInputDevices;
-    OT.getDevices(function(error, devices) {
-        audioInputDevices=devices.filter(function(element) {
-            console.log(element);
-            return element.kind == "audioInput";
-        });
-    });
   
     // Subscribe to a newly created stream
     session.on('streamCreated', function(event) {
