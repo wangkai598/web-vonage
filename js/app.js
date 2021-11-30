@@ -31,7 +31,7 @@ function handleError(error) {
           height: '100%',
           audioVolume:100
         }, handleError);
-        a.subscriber.subscribeToAudio(true);
+        a.subscribeToAudio(true);
       });
 
     // Create a publisher
