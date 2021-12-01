@@ -23,6 +23,9 @@ function handleError(error) {
           width: '100%',
           height: '100%'
         }, handleError);
+
+
+        console.log('streamCreated',event)
       });
 
       session.on('sessionReconnecting',(event)=>{//进入重连
