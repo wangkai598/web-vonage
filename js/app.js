@@ -66,7 +66,7 @@ function handleError(error) {1
 
         publisher = null;
         let publisherOptions = {
-          insertMode: 'append',
+          insertMode: 'replace',
           width: '100%',
           height: '100%'
         };
