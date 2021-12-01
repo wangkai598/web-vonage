@@ -25,6 +25,16 @@ function handleError(error) {
         }, handleError);
       });
 
+      session.on('sessionReconnecting',(event)=>{//正在重连
+        console.log('进入重连')
+        
+    });
+
+     session.on('sessionReconnected',(event)=>{//重连成功
+        console.log('重连成功',event)
+    });
+
+
     // Create a publisher
     let publisherOptions = {
         insertMode: 'append',
@@ -41,5 +51,11 @@ function handleError(error) {
       } else {
         session.publish(publisher, handleError);
       }
+    });
+    
+    publisher.on("streamDestroyed", (event)=> {
+        console.log("The publisher stopped streaming.");
+        console.log(event)
+        event.preventDefault();
     });
   }
