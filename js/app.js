@@ -7,7 +7,7 @@ var token = "T1==cGFydG5lcl9pZD00NjUzODQwMiZzaWc9ZDU3OTYzZmRlY2ZiZGM5NDMyODUwNWZ
 initializeSession();
 
 // Handling all of our errors here by alerting them
-function handleError(error) {
+function handleError(error) {1
     if (error) {
       alert(error.message);
     }
@@ -37,6 +37,10 @@ function handleError(error) {
         console.log('sessionReconnected',event)
     });
 
+    session.on('streamPropertyChanged', (event)=> {
+      console.log('streamPropertyChanged',event)
+     });
+
 
     // Create a publisher
     let publisherOptions = {
@@ -60,7 +64,16 @@ function handleError(error) {
         console.log("The publisher stopped streaming.");
         console.log(event)
 
+        publisher = null;
+        let publisherOptions = {
+          insertMode: 'append',
+          width: '100%',
+          height: '100%'
+        };
+  
+    
         session.unpublish(publisher);
+        publisher = OT.initPublisher('publisher', publisherOptions, handleError);
                     publisher.publishVideo(true);
                     publisher.publishAudio(true);
 
