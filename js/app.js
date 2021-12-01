@@ -25,13 +25,13 @@ function handleError(error) {
         }, handleError);
       });
 
-      session.on('sessionReconnecting',(event)=>{//正在重连
-        console.log('进入重连')
+      session.on('sessionReconnecting',(event)=>{//进入重连
+        console.log('sessionReconnecting')
         
     });
 
      session.on('sessionReconnected',(event)=>{//重连成功
-        console.log('重连成功',event)
+        console.log('sessionReconnected',event)
     });
 
 
@@ -52,10 +52,23 @@ function handleError(error) {
         session.publish(publisher, handleError);
       }
     });
-    
+
     publisher.on("streamDestroyed", (event)=> {
         console.log("The publisher stopped streaming.");
         console.log(event)
+
+        session.unpublish(publisher);
+                    publisher.publishVideo(true);
+                    publisher.publishAudio(true);
+
+                    session.publish(publisher,(error)=>{
+                        if (error) {
+                            console.log('streamDestroyed publisher_error',error);
+                        }
+                    });
+
         event.preventDefault();
     });
+
+    
   }
