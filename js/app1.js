@@ -114,8 +114,8 @@ function handleError(error) {1
     publisher.on("streamDestroyed", (event)=> {
         console.log("The publisher stopped streaming.");
         console.log(event)
-        publisher.disconnect && this.publisher.disconnect();
-        session.disconnect && this.session.disconnect();  
+        publisher.disconnect && publisher.disconnect();
+        session.disconnect && session.disconnect();  
        
         // let publisherOptions = {
         //   insertMode: 'append',
