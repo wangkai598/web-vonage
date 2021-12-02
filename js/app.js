@@ -24,16 +24,18 @@ function handleError(error) {1
           height: '100%'
         }, handleError);
         console.log('streamCreated == 有人进来',event)
+
+        subscribe.on('disconnected',(event)=>{// 
+          console.log('subscribe -- disconnected ')
+        });
+        subscribe.on('connected',(event)=>{ 
+          console.log('subscribe -- connected')
+      });
+      subscribe.on('destroyed',(event)=>{
+          console.log('subscribe -- destroyed')
       });
 
-      subscribe.on('disconnected',(event)=>{// 
-        console.log('subscribe -- disconnected ')
-      });
-      subscribe.on('connected',(event)=>{ 
-        console.log('subscribe -- connected')
-    });
-    subscribe.on('destroyed',(event)=>{
-        console.log('subscribe -- destroyed')
+     
   });
  
 
