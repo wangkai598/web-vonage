@@ -112,13 +112,13 @@ function handleError(error) {1
           console.log('streamCreated == 有人进来',event)
   
           subscribe.on('disconnected',(event)=>{// 
-            console.log('subscribe -- disconnected ')
+            console.log('subscribe -- disconnected ',event)
           });
           subscribe.on('connected',(event)=>{ 
-            console.log('subscribe -- connected')
+            console.log('subscribe -- connected',event)
         });
           subscribe.on('destroyed',(event)=>{
-            console.log('subscribe -- destroyed')
+            console.log('subscribe -- destroyed',event)
         });
         
       });
