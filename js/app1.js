@@ -15,32 +15,55 @@ function handleError(error) {1
   
   function initializeSession() {
     var session = OT.initSession(apiKey, sessionId);
-    // Subscribe to a newly created stream
-    session.on('streamCreated', function(event) {
+    console.log('初始化session对象',session)
 
-      var subscribe =session.subscribe(event.stream, 'subscriber', {
-          insertMode: 'append',
-          width: '100%',
-          height: '100%'
-        }, handleError);
-        console.log('streamCreated == 有人进来',event)
 
-        subscribe.on('disconnected',(event)=>{// 
-          console.log('subscribe -- disconnected ')
-        });
-        subscribe.on('connected',(event)=>{ 
-          console.log('subscribe -- connected')
-      });
-        subscribe.on('destroyed',(event)=>{
-          console.log('subscribe -- destroyed')
-      });
+    session.on('streamPropertyChanged', (event)=> {
+      console.log('streamPropertyChanged',event)
+    });
 
-     
-  });
+    session.on("sessionDisconnected", (event)=> {
+      console.log('sessionDisconnected',event)
+    });
+
+    
+    session.on('connectionCreated',(event)=>{
+        console.log('connectionCreated',event);
+    })
+
+
+    session.on('connectionDestroyed',(event)=>{
+        console.log('链接中断');
+    })
+
+    session.on('sessionReconnecting',(event)=>{//正在重连
+      console.log('进入重连')
+    })
+
+    session.on('sessionReconnected',(event)=>{//重连成功
+      console.log('重连成功',event)
+    });
+
+    let publisherOptions = {
+      insertMode: 'append',
+      width: '100%',
+      height: '100%',
+      publishAudio:true,
+      publishVideo:true,
+      audioBitrate: 64000,
+    };
+
+    publisher = OT.initPublisher('publisher', publisherOptions, handleError);
+    console.log('初始化publisher对象',publisher)
+    publisher.publishVideo(true);
+    publisher.publishAudio(true);
  
       session.on("streamDestroyed", function (event) {
           console.log("session -- streamDestroyed --  Stream stopped. Reason: " + event.reason);
-  });
+          // event.preventDefault();
+          // var subscribers = session.getSubscribersForStream(event.stream);
+          // console.log("session -- streamDestroyed -- subscribers: " + subscribers);
+    });
       session.on('sessionReconnecting',(event)=>{//进入重连
         console.log('sessionReconnecting')
         
@@ -54,15 +77,6 @@ function handleError(error) {1
       console.log('streamPropertyChanged',event)
      });
 
-
-    // Create a publisher
-    let publisherOptions = {
-        insertMode: 'append',
-        width: '100%',
-        height: '100%'
-      };
-
-    var publisher = OT.initPublisher('publisher', publisherOptions, handleError);
     // Connect to the session
     session.connect(token, function(error) {
       // If the connection is successful, publish to the session
@@ -72,6 +86,30 @@ function handleError(error) {1
         session.publish(publisher, handleError);
       }
     });
+
+      // Subscribe to a newly created stream
+      session.on('streamCreated', function(event) {
+
+        var subscribe =session.subscribe(event.stream, 'subscriber', {
+            insertMode: 'append',
+            width: '100%',
+            height: '100%',
+            audioVolume:100
+          }, handleError);
+          console.log('streamCreated == 有人进来',event)
+  
+          subscribe.on('disconnected',(event)=>{// 
+            console.log('subscribe -- disconnected ')
+          });
+          subscribe.on('connected',(event)=>{ 
+            console.log('subscribe -- connected')
+        });
+          subscribe.on('destroyed',(event)=>{
+            console.log('subscribe -- destroyed')
+        });
+  
+        
+      });
 
     publisher.on("streamDestroyed", (event)=> {
         console.log("The publisher stopped streaming.");
