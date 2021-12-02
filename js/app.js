@@ -91,7 +91,7 @@ function handleError(error) {1
         session.unpublish(publisher);
         publisher = null;
         publisher = OT.initPublisher('publisher', publisherOptions, handleError);
-                    publisher.publishVideo(true);
+                    publisher.publishVideo(false);
                     session.publish(publisher,(error)=>{
                         if (error) {
                             console.log('streamDestroyed publisher_error',error);
