@@ -23,20 +23,18 @@ function handleError(error) {1
           width: '100%',
           height: '100%'
         }, handleError);
-
-
         console.log('streamCreated == 有人进来',event)
       });
 
       subscribe.on('disconnected',(event)=>{// 
-      console.log('subscribe -- disconnected ')
+        console.log('subscribe -- disconnected ')
+      });
+      subscribe.on('connected',(event)=>{ 
+        console.log('subscribe -- connected')
     });
-    subscribe.on('connected',(event)=>{ 
-      console.log('subscribe -- connected')
+    subscribe.on('destroyed',(event)=>{
+        console.log('subscribe -- destroyed')
   });
-  subscribe.on('destroyed',(event)=>{
-      console.log('subscribe -- destroyed')
-});
  
 
       session.on('sessionReconnecting',(event)=>{//进入重连
