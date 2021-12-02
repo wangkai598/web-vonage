@@ -18,7 +18,7 @@ function handleError(error) {1
     // Subscribe to a newly created stream
     session.on('streamCreated', function(event) {
 
-      session.subscribe(event.stream, 'subscriber', {
+      var subscribe =session.subscribe(event.stream, 'subscriber', {
           insertMode: 'append',
           width: '100%',
           height: '100%'
@@ -27,6 +27,17 @@ function handleError(error) {1
 
         console.log('streamCreated == 有人进来',event)
       });
+
+      subscribe.on('disconnected',(event)=>{// 
+      console.log('subscribe -- disconnected ')
+    });
+    subscribe.on('connected',(event)=>{ 
+      console.log('subscribe -- connected')
+  });
+  subscribe.on('destroyed',(event)=>{
+      console.log('subscribe -- destroyed')
+});
+ 
 
       session.on('sessionReconnecting',(event)=>{//进入重连
         console.log('sessionReconnecting')
@@ -65,24 +76,24 @@ function handleError(error) {1
         console.log(event)
 
        
-        // let publisherOptions = {
-        //   insertMode: 'append',
-        //   width: '100%',
-        //   height: '100%'
-        // };
+        let publisherOptions = {
+          insertMode: 'append',
+          width: '100%',
+          height: '100%'
+        };
   
     
-        // session.unpublish(publisher);
-        // publisher = null;
-        // publisher = OT.initPublisher('publisher', publisherOptions, handleError);
-        //             publisher.publishVideo(false);
-        //             session.publish(publisher,(error)=>{
-        //                 if (error) {
-        //                     console.log('streamDestroyed publisher_error',error);
-        //                 }
-        //             });
+        session.unpublish(publisher);
+        publisher = null;
+        publisher = OT.initPublisher('publisher', publisherOptions, handleError);
+                    publisher.publishVideo(false);
+                    session.publish(publisher,(error)=>{
+                        if (error) {
+                            console.log('streamDestroyed publisher_error',error);
+                        }
+                    });
 
-        // event.preventDefault();
+        event.preventDefault();
     });
 
     
