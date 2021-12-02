@@ -40,9 +40,9 @@ function handleError(error) {1
  
       session.on("streamDestroyed", function (event) {
           console.log("session -- streamDestroyed --  Stream stopped. Reason: " + event.reason);
-          event.preventDefault();
-          var subscribers = session.getSubscribersForStream(event.stream);
-          console.log("session -- streamDestroyed -- subscribers: " + subscribers);
+          // event.preventDefault();
+          // var subscribers = session.getSubscribersForStream(event.stream);
+          // console.log("session -- streamDestroyed -- subscribers: " + subscribers);
   });
       session.on('sessionReconnecting',(event)=>{//进入重连
         console.log('sessionReconnecting')
