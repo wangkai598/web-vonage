@@ -26,7 +26,7 @@ function handleError(error) {1
     });
 
     session.on('connectionDestroyed', (event)=> {
-      console.log('session - connectionCreated',event)
+      console.log('session - connectionDestroyed',event)
     });
 
     session.on('streamPropertyChanged', (event)=> {
@@ -38,6 +38,28 @@ function handleError(error) {1
     });
     session.on('sessionReconnected',(event)=>{//重连成功
       console.log('session - sessionReconnected',event)
+
+      let publisherOptions = {
+        insertMode: 'append',
+        width: '100%',
+        height: '100%'
+      };
+
+  
+      session.unpublish(publisher);
+      publisher = null;
+      publisher = OT.initPublisher('publisher', publisherOptions, handleError);
+                  publisher.publishVideo(true);
+                  session.publish(publisher,(error)=>{
+                      if (error) {
+                          console.log('streamDestroyed publisher_error',error);
+                      }else {
+                        console.log('本人重新推流成功')
+
+                      }
+                  });
+
+      event.preventDefault();
     });
 
     session.on('streamPropertyChanged', (event)=> {
@@ -98,7 +120,6 @@ function handleError(error) {1
           subscribe.on('destroyed',(event)=>{
             console.log('subscribe -- destroyed')
         });
-  
         
       });
   }
