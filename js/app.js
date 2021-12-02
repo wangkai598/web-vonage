@@ -31,14 +31,19 @@ function handleError(error) {1
         subscribe.on('connected',(event)=>{ 
           console.log('subscribe -- connected')
       });
-      subscribe.on('destroyed',(event)=>{
+        subscribe.on('destroyed',(event)=>{
           console.log('subscribe -- destroyed')
       });
 
      
   });
  
-
+      session.on("streamDestroyed", function (event) {
+          console.log("session -- streamDestroyed --  Stream stopped. Reason: " + event.reason);
+          event.preventDefault();
+          var subscribers = session.getSubscribersForStream(event.stream);
+          console.log("session -- streamDestroyed -- subscribers: " + subscribers);
+  });
       session.on('sessionReconnecting',(event)=>{//进入重连
         console.log('sessionReconnecting')
         
