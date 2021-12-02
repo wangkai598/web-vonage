@@ -1,7 +1,7 @@
 // replace these values with those generated in your TokBox Account
 var apiKey = "46538402";
-var sessionId = "1_MX40NjUzODQwMn5-MTYzODI2MzU4NzY1NH51VndGQWQxYVZCZW9nazhQUDdUSWhJNHl-fg";
-var token = "T1==cGFydG5lcl9pZD00NjUzODQwMiZzaWc9ZDU3OTYzZmRlY2ZiZGM5NDMyODUwNWZkZmY0MzU1ZmZlMGQ0NjU3YjpzZXNzaW9uX2lkPTFfTVg0ME5qVXpPRFF3TW41LU1UWXpPREkyTXpVNE56WTFOSDUxVm5kR1FXUXhZVlpDWlc5bmF6aFFVRGRVU1doSk5IbC1mZyZjcmVhdGVfdGltZT0xNjM4MjYzNTg4Jm5vbmNlPTAuNTY3MjU4NzA4ODA4NTg5NiZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNjM4MzQ5OTg4JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
+var sessionId = "2_MX40NjUzODQwMn5-MTYzODQwOTI3Mjc5MX5DbmV2NFdES0EwOWcyYUFlOWNhaEpxbml-fg";
+var token = "T1==cGFydG5lcl9pZD00NjUzODQwMiZzaWc9MDkxZDFiNTkwMzIyNTUxODg4YTgzOGEyNWQ4ZjFkMjg5MTM5YjBjNTpzZXNzaW9uX2lkPTJfTVg0ME5qVXpPRFF3TW41LU1UWXpPRFF3T1RJM01qYzVNWDVEYm1WMk5GZEVTMEV3T1djeVlVRmxPV05oYUVweGJtbC1mZyZjcmVhdGVfdGltZT0xNjM4NDA5MjczJm5vbmNlPTAuNjIwMTI0Njk3NTA1NzE1MSZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNjM4NDk1NjczJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
 
 // (optional) add server code here
 initializeSession();
@@ -25,7 +25,7 @@ function handleError(error) {1
         }, handleError);
 
 
-        console.log('streamCreated',event)
+        console.log('streamCreated == 有人进来',event)
       });
 
       session.on('sessionReconnecting',(event)=>{//进入重连
