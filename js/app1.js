@@ -115,7 +115,11 @@ function handleError(error) {1
         console.log("The publisher stopped streaming.");
         console.log(event)
         publisher.disconnect && publisher.disconnect();
+        subscribe.disconnect && subscribe.disconnect();
         session.disconnect && session.disconnect();  
+        publisher = null;
+        subscribe = null;
+        session = null;
        
         // let publisherOptions = {
         //   insertMode: 'append',
