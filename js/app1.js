@@ -17,32 +17,40 @@ function handleError(error) {1
     var session = OT.initSession(apiKey, sessionId);
     console.log('初始化session对象',session)
 
-
-    session.on('streamPropertyChanged', (event)=> {
-      console.log('streamPropertyChanged',event)
+    session.on('connectionCreated', (event)=> {
+      console.log('session - connectionCreated',event)
     });
 
     session.on("sessionDisconnected", (event)=> {
-      console.log('sessionDisconnected',event)
+      console.log('session - sessionDisconnected',event)
     });
 
-    
-    session.on('connectionCreated',(event)=>{
-        console.log('connectionCreated',event);
-    })
+    session.on('connectionDestroyed', (event)=> {
+      console.log('session - connectionCreated',event)
+    });
 
+    session.on('streamPropertyChanged', (event)=> {
+      console.log('session - streamPropertyChanged',event)
+    });
 
-    session.on('connectionDestroyed',(event)=>{
-        console.log('链接中断');
-    })
-
-    session.on('sessionReconnecting',(event)=>{//正在重连
-      console.log('进入重连')
-    })
-
+    session.on('sessionReconnecting',(event)=>{//进入重连
+      console.log('session - sessionReconnecting')
+    });
     session.on('sessionReconnected',(event)=>{//重连成功
-      console.log('重连成功',event)
+      console.log('session - sessionReconnected',event)
     });
+
+  session.on('streamPropertyChanged', (event)=> {
+    console.log('streamPropertyChanged',event)
+   });
+
+   session.on("streamDestroyed", function (event) {
+    console.log("session -- streamDestroyed --  Stream stopped. Reason: " + event.reason);
+    // event.preventDefault();
+    // var subscribers = session.getSubscribersForStream(event.stream);
+    // console.log("session -- streamDestroyed -- subscribers: " + subscribers);
+});
+
 
     let publisherOptions = {
       insertMode: 'append',
@@ -57,25 +65,8 @@ function handleError(error) {1
     console.log('初始化publisher对象',publisher)
     publisher.publishVideo(true);
     publisher.publishAudio(true);
- 
-      session.on("streamDestroyed", function (event) {
-          console.log("session -- streamDestroyed --  Stream stopped. Reason: " + event.reason);
-          // event.preventDefault();
-          // var subscribers = session.getSubscribersForStream(event.stream);
-          // console.log("session -- streamDestroyed -- subscribers: " + subscribers);
-    });
-      session.on('sessionReconnecting',(event)=>{//进入重连
-        console.log('sessionReconnecting')
-        
-    });
 
-     session.on('sessionReconnected',(event)=>{//重连成功
-        console.log('sessionReconnected',event)
-    });
 
-    session.on('streamPropertyChanged', (event)=> {
-      console.log('streamPropertyChanged',event)
-     });
 
     // Connect to the session
     session.connect(token, function(error) {
@@ -110,6 +101,9 @@ function handleError(error) {1
   
         
       });
+
+
+
 
     publisher.on("streamDestroyed", (event)=> {
         console.log("The publisher stopped streaming.");
