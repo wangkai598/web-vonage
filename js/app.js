@@ -64,15 +64,16 @@ function handleError(error) {1
         console.log("The publisher stopped streaming.");
         console.log(event)
 
-        publisher = null;
+       
         let publisherOptions = {
-          insertMode: 'replace',
+          insertMode: 'append',
           width: '100%',
           height: '100%'
         };
   
     
         session.unpublish(publisher);
+        publisher = null;
         publisher = OT.initPublisher('publisher', publisherOptions, handleError);
                     publisher.publishVideo(true);
                     publisher.publishAudio(true);
