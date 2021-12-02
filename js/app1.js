@@ -40,12 +40,12 @@ function handleError(error) {1
       console.log('session - sessionReconnected',event)
     });
 
-  session.on('streamPropertyChanged', (event)=> {
+    session.on('streamPropertyChanged', (event)=> {
     console.log('streamPropertyChanged',event)
    });
 
-   session.on("streamDestroyed", function (event) {
-    console.log("session -- streamDestroyed --  Stream stopped. Reason: " + event.reason);
+    session.on("streamDestroyed", function (event) {
+      console.log("session -- streamDestroyed --  Stream stopped. Reason: " + event.reason);
     // event.preventDefault();
     // var subscribers = session.getSubscribersForStream(event.stream);
     // console.log("session -- streamDestroyed -- subscribers: " + subscribers);
@@ -101,39 +101,4 @@ function handleError(error) {1
   
         
       });
-
-
-
-
-    publisher.on("streamDestroyed", (event)=> {
-        console.log("The publisher stopped streaming.");
-        console.log(event)
-        publisher.disconnect && publisher.disconnect();
-        subscribe.disconnect && subscribe.disconnect();
-        session.disconnect && session.disconnect();  
-        publisher = null;
-        subscribe = null;
-        session = null;
-       
-        // let publisherOptions = {
-        //   insertMode: 'append',
-        //   width: '100%',
-        //   height: '100%'
-        // };
-  
-    
-        // session.unpublish(publisher);
-        // publisher = null;
-        // publisher = OT.initPublisher('publisher', publisherOptions, handleError);
-        //             publisher.publishVideo(true);
-        //             session.publish(publisher,(error)=>{
-        //                 if (error) {
-        //                     console.log('streamDestroyed publisher_error',error);
-        //                 }
-        //             });
-
-        // event.preventDefault();
-    });
-
-    
   }
